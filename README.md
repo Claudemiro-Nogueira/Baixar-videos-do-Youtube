@@ -1,6 +1,11 @@
 # Baixar-videos-do-Youtube 
-##Programa para baixar videos do Youtube<h1>
-
-###Dependencia necessearia:
-  **Youtube-dl** 
-  '''sudo apt install youtube-dl'''
+Segue como Baixar
+### Dependencia necessearia:
+* Youtube-dl
+~~~Terminal
+sudo apt install youtube-dl
+~~~
+### Executar o programa
+~~~
+python3 "Baixar arquivo.py"
+~~~
