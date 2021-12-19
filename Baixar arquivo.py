@@ -1,11 +1,13 @@
 import os
 import time
+from pytube import YouTube
+from tkinter import *
 
 #Aqui vai verificar se a dependencia youtube dl esta instalada
-def verificacao():
-    a = os.system("youtube-dl")
-    os.system("clear")
-    if a == 32512:
+
+a = os.system("youtube-dl")
+os.system("clear")
+if a == 32512:
         print("Youtube-dl não existe! \nDependencia necessaria para baixar videos")
         print("Digite s para instalar. Caso não queira digite qualquer tecla")
         verificar = input()
@@ -17,30 +19,51 @@ def verificacao():
         else:
             print("Dependencia necessaria!!")
             verificacao = 0
-    else:
+else:
         print("Depencia youtube-dl esta OK")
         verificacao = 1
         time.sleep(1)
         os.system("clear")
-    return verificacao
+
+
+
+def procurar_arquivo(link):
+    yt = YouTube(link)
+    cwd = os.getcwd()
+    print(cwd)
+    os.system("cd "+ "'" + str(cwd)+ "'")
+    q = len(yt.title) - len(yt.title) + 5
+    lb1["text"] = "Arquivo neste diretorio\n" + cwd
 
 #inicia em si o programa
-def inicializacao(verif):
-    if verif == 1:
-        print("Bem vindo ao DownLoadVideo")
-        link = input("Copie o link aqui: ")
-        print("Arquivo a Baixar...")
-        os.system("youtube-dl " + str(link))
-        print("\nArquivo baixado com sucesso!!")
-    return verif
+def inicializacao():
+    link1 = ent1.get()
+    link = link1
+    lb["text"] = "Arquivo Baixando...Aguarde"
+    os.system("youtube-dl " + str(link))
+    lb["text"] = "Arquivo baixado com\nsucesso"
+    procurar_arquivo(link)
+    print("\nArquivo baixado com sucesso!!")
+ 
+def sobre():
+    lb["text"] = "By Claudemiro-Nogueira\nGITHUB\nVaersão: 0.0.1"
 
-#solicita verificação e retorna o valor 
-verificacao = verificacao()
 
-#Solicita a inicialização caso seja 1 o valor retornado
-while verificacao == 1:
-    vericacao = inicializacao(verificacao)
-    sair = input("Deseja continuar? Digite 0 para sair ")
-    os.system("clear")
-    if sair == '0':
-        break
+janela = Tk()
+janela.title("DLV - DownLoad Video")
+
+ent1 = Entry(janela, width= 23)
+ent1.place(x= 100, y = 100)
+
+bt = Button(janela, text= "Baixar", width= 20, command = inicializacao)
+bt.place(x = 100, y =150)
+bt = Button(janela, text= "Sobre", width= 20, command = sobre)
+bt.place(x = 100, y =200)
+
+lb = Label(janela, text = "Cole seu link abaixo")
+lb.place(x = 125,y = 20)
+lb1 = Label(janela, text = " ")
+lb1.place(x = 125,y = 55)
+janela.geometry("400x300+200+200")
+janela.mainloop()
+
